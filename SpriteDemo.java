@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import framework.*;
+import sound.SoundManager;
 import sprite.*;
 import world.*;
 
@@ -17,6 +18,9 @@ public class SpriteDemo extends SimpleFramework {
 
     // gamestate
     private boolean renderBounds;
+
+    // sound
+    private SoundManager soundManager;
 
     public SpriteDemo() {
         appTitle = "Sprite Demo";
@@ -50,6 +54,11 @@ public class SpriteDemo extends SimpleFramework {
         bg.setViewsForBounds(view);
         heart.setViewsForBounds(view);
         deku.setViewsForBounds(view);
+
+        // play dubstep (for testing purposes)
+        soundManager = new SoundManager();
+        soundManager.playSound("dubstep");
+
     }
 
     @Override
