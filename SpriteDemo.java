@@ -19,15 +19,12 @@ public class SpriteDemo extends SimpleFramework {
     private boolean renderBounds;
 
     public SpriteDemo() {
-        appTitle = "Sprite Demo";
+        appTitle = "Maze Game";
         appBorderScale = 0.99f;
 
         // app is a square
-        appWidth = appHeight = 640;
+        appWidth = appHeight = 1450;
         appWorldWidth = appWorldHeight = 2.0f;
-
-        // for consistency, don't allow window resizing
-        setResizable(false);
     }
 
     @Override
@@ -40,7 +37,7 @@ public class SpriteDemo extends SimpleFramework {
 
         // load spritesheets
         heart = new HeartSprite(getClass().getResource("/res/hearts_9x1.png"));
-        bg = new BGSprite(getClass().getResource("/res/background_1x1.png"));
+        bg = new BGSprite(getClass().getResource("/res/floor_1x1.png"));
         deku = new DekuSprite(getClass().getResource("/res/deku_4x4.png"));
         
         // move deku up and to the right a bit
@@ -50,6 +47,9 @@ public class SpriteDemo extends SimpleFramework {
         bg.setViewsForBounds(view);
         heart.setViewsForBounds(view);
         deku.setViewsForBounds(view);
+
+        // for consistency, don't allow window resizing
+        setResizable(false);
     }
 
     @Override
@@ -60,12 +60,15 @@ public class SpriteDemo extends SimpleFramework {
     @Override
     protected void updateObjects(float delta) {
         super.updateObjects(delta);
-        
+
         // toggle rendering of bounding shapes
         if (keyboard.keyDownOnce(KeyEvent.VK_B)) {
             renderBounds = !renderBounds;
         }
-        
+        bg.setViewsForBounds(getViewportTransform());
+        heart.setViewsForBounds(getViewportTransform());
+        deku.setViewsForBounds(getViewportTransform());
+
         // update game sprites
         heart.update(deku);
         deku.update(keyboard, bg);
@@ -83,14 +86,15 @@ public class SpriteDemo extends SimpleFramework {
         // create a graphics2d object for
         // drawing BufferedImage instances
         Graphics2D g2d = (Graphics2D) g;
-        
+
         // call render function for each sprite
-        bg.render(g2d, view);
-        heart.render(g2d, view);
-        deku.render(g2d, view);     
+        bg.render(g2d, getViewportTransform());
+        heart.render(g2d, getViewportTransform());
+        deku.render(g2d, getViewportTransform());
         
         // render the bounding shapes only
         // if bounds rendering is enabled
+
         if (renderBounds) {
             bg.renderBoundingShapes(g);
             heart.renderBoundingShapes(g);
