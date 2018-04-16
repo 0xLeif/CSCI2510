@@ -9,6 +9,7 @@ import java.awt.geom.AffineTransform;
 
 import java.io.IOException;
 
+import util.Utility;
 import world.*;
 
 public class Sprite {
@@ -199,5 +200,4 @@ public class Sprite {
             b.updateWorld();
         }
     }
-
 }

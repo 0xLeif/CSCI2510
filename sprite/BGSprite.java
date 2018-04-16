@@ -23,25 +23,23 @@ public class BGSprite extends Sprite {
         // left boundary
         VectorObject leftBound = new VectorObject(boundVectors);
         leftBound.rotation = (float)Math.toRadians(90.0);
-        leftBound.position = new Vector2f(-1.0f, 0.0f);
+        leftBound.position = new Vector2f(-1.1f, 0.0f);
         addBound(leftBound);
 
         // bottom boundary
         VectorObject bottomBound = new VectorObject(boundVectors);
-        bottomBound.position = new Vector2f(0.3f, -0.97f);
+        bottomBound.position = new Vector2f(0f, -1.1f);
         addBound(bottomBound);
 
         // top boundary        
         VectorObject topBound = new VectorObject(boundVectors);
-        topBound.scale = 0.8f;
-        topBound.position = new Vector2f(0.1f, 1.12f);
+        topBound.position = new Vector2f(0f, 1.1f);
         addBound(topBound);
 
         // right boundary
         VectorObject rightBound = new VectorObject(boundVectors);
-        rightBound.scale = 0.775f;
         rightBound.rotation = (float)Math.toRadians(90.0);
-        rightBound.position = new Vector2f(1.1f, 0.1f);
+        rightBound.position = new Vector2f(1.1f, 0f);
         addBound(rightBound);
     }
 
