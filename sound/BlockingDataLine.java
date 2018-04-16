@@ -22,7 +22,6 @@ public class BlockingDataLine extends AudioStream {
             //UPDATE
             createControls( stream.getLine() );
             //UPDATE
-            System.out.println("open");
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         } finally {
@@ -38,7 +37,6 @@ public class BlockingDataLine extends AudioStream {
             while (!started) {
                 cond.await();
             }
-            System.out.println("started");
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         } finally {
@@ -54,7 +52,6 @@ public class BlockingDataLine extends AudioStream {
             while (!started) {
                 cond.await();
             }
-            System.out.println("started");
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         } finally {
@@ -75,7 +72,6 @@ public class BlockingDataLine extends AudioStream {
             while (started) {
                 cond.await();
             }
-            System.out.println("stopped");
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         } finally {
@@ -94,7 +90,6 @@ public class BlockingDataLine extends AudioStream {
             //UPDATE
             clearControls();
             //UPDATE
-            System.out.println("closed");
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         } finally {

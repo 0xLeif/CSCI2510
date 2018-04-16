@@ -18,7 +18,6 @@ public class RestartEvent extends SoundEvent {
     }
 
     protected void processEvent(String event) throws InterruptedException {
-        System.out.println("Got " + event + " event");
         if (currentState == STATE_WAITING) {
             if (event == EVENT_FIRE) {
                 currentState = STATE_RUNNING;

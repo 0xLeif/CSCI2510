@@ -76,14 +76,9 @@ public class AudioDataLine implements Runnable {
         double sampleRate = audioFormat.getSampleRate();
         double bitSize = audioFormat.getSampleSizeInBits();
         double channels = audioFormat.getChannels();
-        System.out.println("Sample Rate: " + sampleRate);
-        System.out.println("Bit Size: " + bitSize);
-        System.out.println("Channels: " + channels);
-        System.out.println("Milliseconds: " + milliseconds);
         if (bitSize == AudioSystem.NOT_SPECIFIED
                 || sampleRate == AudioSystem.NOT_SPECIFIED
                 || channels == AudioSystem.NOT_SPECIFIED) {
-            System.out.println("BufferSize: " + -1);
             return -1;
         } else {
             double temp = milliseconds;
@@ -94,7 +89,6 @@ public class AudioDataLine implements Runnable {
             }
             double bytesPerFrame = bitSize / 8.0;
             double size = (int) (frames * bytesPerFrame * channels);
-            System.out.println("BufferSize: " + size);
             return (int) size;
         }
     }
@@ -140,7 +134,6 @@ public class AudioDataLine implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("write stream");
         try {
             while (true) {
                 int written = 0;
@@ -148,12 +141,10 @@ public class AudioDataLine implements Runnable {
                         : bufferSize;
                 while (written < soundData.length) {
                     if (Thread.currentThread() != writer) {
-                        System.out.println("Stream canceled");
                         loopCount = 0;
                         break; // stop writing data
                     } else if (restart) {
                         restart = false;
-                        System.out.println("Stream canceled");
                         if (loopCount != AudioStream.LOOP_CONTINUOUSLY) {
                             loopCount++;
                         }
@@ -172,7 +163,6 @@ public class AudioDataLine implements Runnable {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            System.out.println("Stream finished");
             dataLine.drain();
             dataLine.stop();
         }

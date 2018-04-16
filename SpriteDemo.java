@@ -21,6 +21,7 @@ public class SpriteDemo extends SimpleFramework {
 
     // sound
     private SoundManager soundManager;
+    private SoundManager musicManager;
 
     public SpriteDemo() {
         appTitle = "Sprite Demo";
@@ -57,13 +58,16 @@ public class SpriteDemo extends SimpleFramework {
 
         // play dubstep (for testing purposes)
         soundManager = new SoundManager();
-        soundManager.playSound("dubstep");
+        musicManager = new SoundManager();
+        musicManager.playSound("dubstep");
 
     }
 
     @Override
     protected void processInput(float delta) {
         super.processInput(delta);
+        if(keyboard.keyDownOnce(KeyEvent.VK_M))
+            soundManager.playSound("gunshot");
     }
 
     @Override

@@ -23,7 +23,11 @@ public class SoundManager {
         switch (s) {
             case "dubstep":
                 setupSound("soundclips/bensound-dubstep.wav", s);
-                oneShotClip.fire();
+                oneShotStream.fire();
+                break;
+            case "gunshot":
+                setupSound("soundclips/gunshot.wav", s);
+                oneShotStream.fire();
                 break;
         }
     }
