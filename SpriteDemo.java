@@ -2,6 +2,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 import framework.*;
+import sound.MusicManager;
+import sound.SoundEffectManager;
 import sound.SoundManager;
 import sprite.*;
 import world.*;
@@ -20,8 +22,8 @@ public class SpriteDemo extends SimpleFramework {
     private boolean renderBounds;
 
     // sound
-    private SoundManager soundManager;
-    private SoundManager musicManager;
+    private SoundEffectManager soundEffectManager;
+    private MusicManager musicManager;
 
     public SpriteDemo() {
         appTitle = "Sprite Demo";
@@ -57,9 +59,9 @@ public class SpriteDemo extends SimpleFramework {
         deku.setViewsForBounds(view);
 
         // play dubstep (for testing purposes)
-        soundManager = new SoundManager();
-        musicManager = new SoundManager();
-        musicManager.playSound("dubstep");
+        soundEffectManager = new SoundEffectManager();
+        musicManager = new MusicManager();
+        musicManager.playMusic("dubstep");
 
     }
 
@@ -67,7 +69,7 @@ public class SpriteDemo extends SimpleFramework {
     protected void processInput(float delta) {
         super.processInput(delta);
         if(keyboard.keyDownOnce(KeyEvent.VK_M))
-            soundManager.playSound("gunshot");
+            soundEffectManager.playSound("gunshot");
     }
 
     @Override

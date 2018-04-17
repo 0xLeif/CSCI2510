@@ -6,33 +6,20 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class SoundManager {
-    private OneShotEvent oneShotClip;
-    private LoopEvent loopClip;
-    private RestartEvent restartClip;
-    private OneShotEvent oneShotStream;
-    private LoopEvent loopStream;
-    private RestartEvent restartStream;
-    private byte[] soundBytes;
-    private String loaded;
+    protected OneShotEvent oneShotClip;
+    protected LoopEvent loopClip;
+    protected RestartEvent restartClip;
+    protected OneShotEvent oneShotStream;
+    protected LoopEvent loopStream;
+    protected RestartEvent restartStream;
+    protected byte[] soundBytes;
+    protected String loaded;
 
     public SoundManager() {
 
     }
 
-    public void playSound(String s) {
-        switch (s) {
-            case "dubstep":
-                setupSound("soundclips/bensound-dubstep.wav", s);
-                oneShotStream.fire();
-                break;
-            case "gunshot":
-                setupSound("soundclips/gunshot.wav", s);
-                oneShotStream.fire();
-                break;
-        }
-    }
-
-    private void setupSound(String filepath, String sound) {
+    protected void setupSound(String filepath, String sound) {
         InputStream in = ResourceLoader.load(SoundManager.class, filepath, "");
         soundBytes = readBytes(in);
         loadWaveFile(soundBytes);
