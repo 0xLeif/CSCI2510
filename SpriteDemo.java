@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import framework.*;
 import sound.MusicManager;
@@ -30,7 +31,7 @@ public class SpriteDemo extends SimpleFramework {
         appBorderScale = 0.99f;
 
         // app is a square
-        appWidth = appHeight = 1450;
+        appWidth = appHeight = 1250;
         appWorldWidth = appWorldHeight = 2.0f;
     }
 
@@ -44,7 +45,7 @@ public class SpriteDemo extends SimpleFramework {
 
         // load spritesheets
         heart = new HeartSprite(getClass().getResource("/res/hearts_9x1.png"));
-        bg = new BGSprite(getClass().getResource("/res/floor_1x1.png"));
+        bg = new BGSprite(getClass().getResource("/res/background_1x1.png"));
         deku = new DekuSprite(getClass().getResource("/res/deku_4x4.png"));
         
         // move deku up and to the right a bit
@@ -87,7 +88,6 @@ public class SpriteDemo extends SimpleFramework {
         heart.updateWorldsForBounds();
         bg.updateWorldsForBounds();
         deku.updateWorldsForBounds();
-
     }
 
     @Override
@@ -101,7 +101,7 @@ public class SpriteDemo extends SimpleFramework {
         bg.render(g2d, getViewportTransform());
         heart.render(g2d, getViewportTransform());
         deku.render(g2d, getViewportTransform());
-        
+
         // render the bounding shapes only
         // if bounds rendering is enabled
 
