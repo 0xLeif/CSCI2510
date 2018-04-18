@@ -61,7 +61,7 @@ public class SpriteDemo extends SimpleFramework {
         // play dubstep (for testing purposes)
         soundEffectManager = new SoundEffectManager();
         musicManager = new MusicManager();
-        musicManager.playMusic("dubstep");
+        //musicManager.playMusic("dubstep");
 
     }
 
