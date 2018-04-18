@@ -68,8 +68,6 @@ public class SpriteDemo extends SimpleFramework {
     @Override
     protected void processInput(float delta) {
         super.processInput(delta);
-        if(keyboard.keyDownOnce(KeyEvent.VK_M))
-            soundEffectManager.playSound("gunshot");
     }
 
     @Override
