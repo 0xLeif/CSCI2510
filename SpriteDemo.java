@@ -2,6 +2,9 @@ import java.awt.*;
 import java.awt.event.*;
 
 import framework.*;
+import sound.MusicManager;
+import sound.SoundEffectManager;
+import sound.SoundManager;
 import sprite.*;
 import world.*;
 
@@ -17,6 +20,10 @@ public class SpriteDemo extends SimpleFramework {
 
     // gamestate
     private boolean renderBounds;
+
+    // sound
+    private SoundEffectManager soundEffectManager;
+    private MusicManager musicManager;
 
     public SpriteDemo() {
         appTitle = "Maze Game";
@@ -48,7 +55,10 @@ public class SpriteDemo extends SimpleFramework {
         heart.setViewsForBounds(view);
         deku.setViewsForBounds(view);
 
-        // for consistency, don't allow window resizing
+        // play dubstep (for testing purposes)
+        soundEffectManager = new SoundEffectManager();
+        musicManager = new MusicManager();
+        //musicManager.playMusic("dubstep");
         setResizable(false);
     }
 
