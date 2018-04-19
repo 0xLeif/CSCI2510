@@ -57,7 +57,7 @@ public class BGSprite extends Sprite {
         try {
             String str = new String(Files.readAllBytes(Paths.get(mazeFile)));
             for(String line : str.split("\n")) {
-               xyz.add(line.split(","));
+                xyz.add(line.split(","));
             }
         } catch (IOException e) {
             e.printStackTrace();
