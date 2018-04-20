@@ -49,7 +49,7 @@ public class SpriteDemo extends SimpleFramework {
         deku = new DekuSprite(getClass().getResource("/res/deku_4x4.png"));
         
         // move deku up and to the right a bit
-        deku.setPos(new Vector2f(0.25f, 0.25f));
+        deku.setPos(new Vector2f(0.75f, -.72f));
 
         // set the viewport for the sprites
         bg.setViewsForBounds(view);
