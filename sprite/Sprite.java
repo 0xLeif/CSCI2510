@@ -130,7 +130,7 @@ public class Sprite {
         }
     }
     
-    // check if this sprite is coliding with some
+    // check if this sprite is colliding with some
     // other Sprite by comparing bounding shapes
     public boolean isCollidingWith(Sprite other) {
     	// for every bounding shape of this object...

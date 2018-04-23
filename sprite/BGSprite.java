@@ -1,9 +1,6 @@
 package sprite;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -28,7 +25,7 @@ public class BGSprite extends Sprite {
     // add to the list of bounding shapes once each is set
     public BGSprite(URL bgfile) {
         super(bgfile);
-        GenerateMaze("input/maze_level_one.txt");
+        generateMaze("input/maze_level_one.txt");
         // left boundary
         VectorObject leftBound = new VectorObject(boundVectors);
         leftBound.rotation = (float)Math.toRadians(90.0);
@@ -52,7 +49,7 @@ public class BGSprite extends Sprite {
         addBound(rightBound);
     }
 
-    private void GenerateMaze(String mazeFile){
+    private void generateMaze(String mazeFile){
         ArrayList<String[]> xyz = new ArrayList<>();
         try {
             String str = new String(Files.readAllBytes(Paths.get(mazeFile)));
@@ -82,7 +79,10 @@ public class BGSprite extends Sprite {
         super.render(g2d, view);
         for (WallSprite s : list) {
             if(s.isSolid) {
+                s.updateWorldsForBounds();
+                s.setViewsForBounds(view);
                 s.render(g2d,view);
+                s.renderBoundingShapes(g2d);
             }
         }
     }
