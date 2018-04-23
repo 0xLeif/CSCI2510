@@ -10,7 +10,7 @@ public class WallSprite extends Sprite {
     public boolean isSolid;
 
     public WallSprite(Vector2f location, String type) throws MalformedURLException {
-        super(Paths.get("res/walltile_1x1.png").toUri().toURL());
+        super(Paths.get("res/img/walltile_1x1.png").toUri().toURL());
         pos = getPlayAreaLocation(location);
         isSolid = type.equals("1");
         VectorObject bound = new VectorObject(boundVectors);

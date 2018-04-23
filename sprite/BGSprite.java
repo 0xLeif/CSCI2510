@@ -20,12 +20,13 @@ public class BGSprite extends Sprite {
         new Vector2f(-1.0f, 0.3f), 
         new Vector2f(1.0f, 0.3f)
     };
+
     private ArrayList<WallSprite> list = new ArrayList<>();
     // constructor: create a bounding shape and apply transformations,
     // add to the list of bounding shapes once each is set
     public BGSprite(URL bgfile) {
         super(bgfile);
-        generateMaze("input/maze_level_one.txt");
+        generateMaze("res/levels/maze_level_one.txt");
         // left boundary
         VectorObject leftBound = new VectorObject(boundVectors);
         leftBound.rotation = (float)Math.toRadians(90.0);
@@ -75,6 +76,19 @@ public class BGSprite extends Sprite {
     }
 
     @Override
+    // render the bounding shapes of this sprite
+    public void renderBoundingShapes(Graphics g) {
+        for (VectorObject b : bounds) {
+            b.render(g);
+            for (WallSprite s : list){
+                if(s.isSolid){
+                    s.renderBoundingShapes(g);
+                }
+            }
+        }
+    }
+
+    @Override
     public void render(Graphics2D g2d, Matrix3x3f view) {
         super.render(g2d, view);
         for (WallSprite s : list) {
@@ -82,8 +96,11 @@ public class BGSprite extends Sprite {
                 s.updateWorldsForBounds();
                 s.setViewsForBounds(view);
                 s.render(g2d,view);
-                s.renderBoundingShapes(g2d);
             }
         }
+    }
+
+    public ArrayList<WallSprite> getList() {
+        return list;
     }
 }

@@ -1,11 +1,9 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 import framework.*;
 import sound.MusicManager;
 import sound.SoundEffectManager;
-import sound.SoundManager;
 import sprite.*;
 import world.*;
 
@@ -44,9 +42,9 @@ public class SpriteDemo extends SimpleFramework {
         view = getViewportTransform();
 
         // load spritesheets
-        heart = new HeartSprite(getClass().getResource("/res/hearts_9x1.png"));
-        bg = new BGSprite(getClass().getResource("/res/background_1x1.png"));
-        deku = new DekuSprite(getClass().getResource("/res/deku_4x4.png"));
+        heart = new HeartSprite(getClass().getResource("/res/img/hearts_9x1.png"));
+        bg = new BGSprite(getClass().getResource("/res/img/background_1x1.png"));
+        deku = new DekuSprite(getClass().getResource("/res/img/deku_4x4.png"));
         
         // move deku up and to the right a bit
         deku.setPos(new Vector2f(0.75f, -.72f));
