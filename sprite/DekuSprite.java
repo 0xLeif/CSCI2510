@@ -11,8 +11,8 @@ public class DekuSprite extends Sprite {
 	// sprite numbers for LDUR facing
 	public static final int FACE_D = 0;
 	public static final int FACE_U = 4;
-	public static final int FACE_L = 8;
-	public static final int FACE_R = 12;
+	public static final int FACE_L = 12;
+	public static final int FACE_R = 8;
 
 	// 0-4 for subframes in 4 frame animation
 	public static final int FRAME1 = 0;
@@ -46,10 +46,10 @@ public class DekuSprite extends Sprite {
 
 	// the bounding shape for deku is one rectangle
 	private static final Vector2f[] boundVectors = {
-            new Vector2f(0.04f, -0.04f),
-            new Vector2f(-0.04f, -0.04f),
-            new Vector2f(-0.04f, 0.04f),
-            new Vector2f(0.04f, 0.04f)
+            new Vector2f(0.025f, -0.025f),
+            new Vector2f(-0.025f, -0.025f),
+            new Vector2f(-0.025f, 0.01f),
+            new Vector2f(0.025f, 0.01f)
 	};
 
 	// constructor: initialize values and create the sprite

@@ -44,7 +44,7 @@ public class SpriteDemo extends SimpleFramework {
         // load spritesheets
         heart = new HeartSprite(getClass().getResource("/res/img/hearts_9x1.png"));
         bg = new BGSprite(getClass().getResource("/res/img/background_1x1.png"));
-        deku = new DekuSprite(getClass().getResource("/res/img/deku_4x4.png"));
+        deku = new DekuSprite(getClass().getResource("/res/img/girlsprite_4x4.png"));
         
         // move deku up and to the right a bit
         deku.setPos(new Vector2f(0.75f, -.72f));
