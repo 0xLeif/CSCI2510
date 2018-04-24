@@ -85,10 +85,6 @@ public class Sprite {
         // calculate and set the size of a single sprite from the sheet
         spriteWidth  = sheet.getWidth()  / numSpritesHorizontal;
         spriteHeight = sheet.getHeight() / numSpritesVertical;
-
-        // DEBUG: verify file dimensions
-        System.out.printf("%s has %d sprite(s) in one row in %d total row(s).\n",
-            fileName, numSpritesHorizontal, numSpritesVertical);
     }
 
     // transform the pos, rot, scale of this sprite
@@ -134,7 +130,7 @@ public class Sprite {
         }
     }
     
-    // check if this sprite is coliding with some
+    // check if this sprite is colliding with some
     // other Sprite by comparing bounding shapes
     public boolean isCollidingWith(Sprite other) {
     	// for every bounding shape of this object...

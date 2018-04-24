@@ -10,7 +10,6 @@ public class SoundEffectManager extends SoundManager {
             case "ghost2":
                 super.setupSound("soundclips/ghost2.wav", s);
                 oneShotClip.fire();
-                break;
         }
     }
 }

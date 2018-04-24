@@ -11,8 +11,8 @@ public class DekuSprite extends Sprite {
 	// sprite numbers for LDUR facing
 	public static final int FACE_D = 0;
 	public static final int FACE_U = 4;
-	public static final int FACE_L = 8;
-	public static final int FACE_R = 12;
+	public static final int FACE_L = 12;
+	public static final int FACE_R = 8;
 
 	// 0-4 for subframes in 4 frame animation
 	public static final int FRAME1 = 0;
@@ -45,11 +45,11 @@ public class DekuSprite extends Sprite {
 	public float vel; 		// movement speed
 
 	// the bounding shape for deku is one rectangle
-	private static final Vector2f[] boundVectors = { 
-		new Vector2f(0.075f / 2, -0.119f / 2),
-		new Vector2f(-0.075f / 2, -0.119f / 2), 
-		new Vector2f(-0.075f / 2, 0.119f / 2),
-		new Vector2f(0.075f / 2, 0.119f / 2) 
+	private static final Vector2f[] boundVectors = {
+            new Vector2f(0.025f, -0.025f),
+            new Vector2f(-0.025f, -0.025f),
+            new Vector2f(-0.025f, 0.01f),
+            new Vector2f(0.025f, 0.01f)
 	};
 
 	// constructor: initialize values and create the sprite
@@ -211,7 +211,7 @@ public class DekuSprite extends Sprite {
 	}
 
 	// apply movement to the sprite
-	public void applyVelocity(Sprite bg) {
+	public void applyVelocity(BGSprite bg) {
 		// don't apply the movement, but record
 		// what the change in pos WILL be
 		Vector2f deltaPos = new Vector2f();
@@ -248,6 +248,13 @@ public class DekuSprite extends Sprite {
 			bounds.get(0).position = oldPos;
 			setPos(oldPos);
 		}
+
+		for(WallSprite wallSprite : bg.getList()){
+		    if(isCollidingWith(wallSprite)) {
+                bounds.get(0).position = oldPos;
+                setPos(oldPos);
+		    }
+        }
 
 	}
 
