@@ -44,15 +44,13 @@ public class VectorObject implements Drawable {
         world = world.mul(Matrix3x3f.translate(new Vector2f(position.x, position.y)));
     }
 
-    // Render the vector object with the applied tranformations
+    // Render the vector object with the applied transformations
     // Also hold on to the list of transformed points so that they
-    // don't have to be recalulated with getWorldVectors() every time
+    // don't have to be recalculated with getWorldVectors() every time
     public void render(Graphics g) {
         Vector2f[] newVectors = getWorldVectors();  // Apply transformations to all vectors
         
         g.setColor(color);
-        
-        
         transformedVectors.clear();   // Empty the list of transformed vectors
                                       // to make room for new ones
         Vector2f prev = newVectors[newVectors.length - 1];

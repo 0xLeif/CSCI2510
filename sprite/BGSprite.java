@@ -21,12 +21,15 @@ public class BGSprite extends Sprite {
         new Vector2f(1.0f, 0.3f)
     };
 
+    private String[] levels = {"res/levels/maze_level_one.txt", "res/levels/maze_level_two.txt", "res/levels/end_level.txt"};
+    private int currLevel = 0;
+
     private ArrayList<WallSprite> list = new ArrayList<>();
     // constructor: create a bounding shape and apply transformations,
     // add to the list of bounding shapes once each is set
     public BGSprite(URL bgfile) {
         super(bgfile);
-        generateMaze("res/levels/maze_level_one.txt");
+        generateMaze();
         // left boundary
         VectorObject leftBound = new VectorObject(boundVectors);
         leftBound.rotation = (float)Math.toRadians(90.0);
@@ -50,10 +53,11 @@ public class BGSprite extends Sprite {
         addBound(rightBound);
     }
 
-    private void generateMaze(String mazeFile){
+    public void generateMaze(){
         ArrayList<String[]> xyz = new ArrayList<>();
+        list.clear();
         try {
-            String str = new String(Files.readAllBytes(Paths.get(mazeFile)));
+            String str = new String(Files.readAllBytes(Paths.get(levels[currLevel])));
             for(String line : str.split("\n")) {
                 xyz.add(line.split(","));
             }
@@ -73,6 +77,7 @@ public class BGSprite extends Sprite {
             x = 0;
             y++;
         }
+        currLevel++;
     }
 
     @Override

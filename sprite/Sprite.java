@@ -139,7 +139,7 @@ public class Sprite {
     		for (Vector2f localPoint : localBound.transformedVectors) {
     			// check if that point is within the current sprite's
     			// series of bounding shapes
-    			for (VectorObject otherBound : other.bounds) {
+     			for (VectorObject otherBound : other.bounds) {
     				if (otherBound.vectorIsWithin(localPoint)) {
     					return true;
     				}
