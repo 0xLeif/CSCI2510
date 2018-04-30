@@ -42,12 +42,13 @@ public class SpriteDemo extends SimpleFramework {
         view = getViewportTransform();
 
         // load spritesheets
-        heart = new HeartSprite(getClass().getResource("/res/img/hearts_9x1.png"));
+        heart = new HeartSprite(getClass().getResource("/res/img/torch_9x1.png"));
         bg = new BGSprite(getClass().getResource("/res/img/background_1x1.png"));
         deku = new DekuSprite(getClass().getResource("/res/img/girlsprite_4x4.png"));
         
         // move deku up and to the right a bit
         deku.setPos(new Vector2f(0.75f, -.72f));
+        heart.setPos(new Vector2f(-0.75f, .68f));
 
         // set the viewport for the sprites
         bg.setViewsForBounds(view);
@@ -79,9 +80,9 @@ public class SpriteDemo extends SimpleFramework {
         deku.setViewsForBounds(getViewportTransform());
 
         // update game sprites
-        heart.update(deku);
+        heart.update(deku, bg);
         deku.update(keyboard, bg);
-        
+
         // apply words to vectorobject bounds
         heart.updateWorldsForBounds();
         bg.updateWorldsForBounds();
