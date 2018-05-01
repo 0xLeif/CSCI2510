@@ -72,6 +72,7 @@ public class GhostSprite extends Sprite {
         soundPlayed = false;
         chasingPlayer = false;
         chaseTimer = 0;
+        spawnPos = pos;
     }
 
     public void setPos(Vector2f newPos) {
