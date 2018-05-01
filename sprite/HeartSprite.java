@@ -1,7 +1,6 @@
 package sprite;
 
 import java.net.URL;
-
 import world.*;
 
 public class HeartSprite extends Sprite {
@@ -35,6 +34,7 @@ public class HeartSprite extends Sprite {
     private void transitionLevel(DekuSprite deku, BGSprite bg) {
         deku.setPos(new Vector2f(0.75f, -.72f));
         deku.setCurrentSpriteNum(0);
+        SpriteDemo
         bg.generateMaze();
         setPos(new Vector2f(.55f, .2f));
     }

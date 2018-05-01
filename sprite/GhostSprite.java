@@ -81,20 +81,12 @@ public class GhostSprite extends Sprite {
         }
     }
 
-    public void setSpawnPos(Vector2f p) {
-        spawnPos = p;
-        pos = p;
-        for(VectorObject b : bounds) {
-            b.position = p;
-        }
-    }
-
     private void setFacing(int direction) {
         facing = direction;
         currentSpriteNum = facing;
     }
 
-    public boolean update(DekuSprite ds, BGSprite bg) {
+    public void update(DekuSprite ds, BGSprite bg) {
         if(visionBound.isCollidingWith(ds.bounds.get(0))) {
             visible = true;
             sawPlayer = true;
@@ -122,9 +114,6 @@ public class GhostSprite extends Sprite {
             soundPlayed = false;
 
         move(sawPlayer, bg, ds);
-
-        // return boolean for the game to recognize when the player is chased and play appropriate music
-        return chasingPlayer;
     }
 
     private void move(boolean afterPlayer, BGSprite bg, DekuSprite ds) {
@@ -243,5 +232,9 @@ public class GhostSprite extends Sprite {
         AffineTransform transformImg = getTransform(img, view);
         if(visible)
             g2d.drawImage(img, transformImg, null);
+    }
+
+    public boolean isChasingPlayer() {
+        return chasingPlayer;
     }
 }
