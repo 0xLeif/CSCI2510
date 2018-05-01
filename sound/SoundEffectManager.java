@@ -10,6 +10,15 @@ public class SoundEffectManager extends SoundManager {
             case "ghost2":
                 super.setupSound("soundclips/ghost2.wav", s);
                 oneShotClip.fire();
+                break;
+            case "jello1":
+                super.setupSound("soundclips/jello1.wav", s);
+                oneShotStream.fire();
+                break;
+            case "jello2":
+                super.setupSound("soundclips/jello2.wav", s);
+                oneShotStream.fire();
+                break;
         }
     }
 }
