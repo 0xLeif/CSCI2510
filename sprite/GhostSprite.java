@@ -152,7 +152,7 @@ public class GhostSprite extends Sprite {
             System.out.println("chaseTimer: " + chaseTimer);
             chaseTimer--;
 
-            if(chaseTimer <= 0 && !visible) {
+            if(chaseTimer <= 0) {
                 chasingPlayer = false;
                 sawPlayer = false;
                 setPos(spawnPos);
