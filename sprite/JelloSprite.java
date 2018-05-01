@@ -102,7 +102,6 @@ public class JelloSprite extends Sprite {
         }
         if(audioBound.isCollidingWith(ds.bounds.get(0))) {
             if(!soundPlayed) {
-                System.out.println("colliding");
                 Random r = new Random();
                 int randomSound = r.nextInt(100);
                 switch (randomSound) {
