@@ -37,6 +37,7 @@ public class HeartSprite extends Sprite {
         deku.setCurrentSpriteNum(0);
         bg.generateMaze();
         setPos(new Vector2f(.55f, .2f));
+        GameStates.gameTime = 60;
     }
 
     // set the position of the torch

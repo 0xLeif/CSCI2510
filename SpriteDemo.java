@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 
 import framework.*;
 import sound.MusicManager;
@@ -32,7 +33,6 @@ public class SpriteDemo extends SimpleFramework {
     public SpriteDemo() {
         appTitle = "Maze Game";
         appBorderScale = 0.99f;
-
         // app is a square
         appWidth = appHeight = 1250;
         appWorldWidth = appWorldHeight = 2.0f;
@@ -72,6 +72,19 @@ public class SpriteDemo extends SimpleFramework {
         lastPlayed = -1;
         musicManager.playMusic("level");
         setResizable(false);
+        
+        createTimer();
+    }
+    
+    private void createTimer() {
+        GameStates.timer.schedule(new TimerTask() {
+            public void run() {
+                if(--GameStates.gameTime == 0) {
+                    System.out.println("Game Over!");
+                    System.exit(1);
+                }
+            }
+        }, 0, 1000);
     }
 
     @Override
@@ -124,6 +137,13 @@ public class SpriteDemo extends SimpleFramework {
             lastPlayed = musicSelect;
         }
     }
+    
+    private void renderTimer(Graphics g) {
+        Font z = new Font("ZapfDingbats", Font.PLAIN, 30);
+        g.setColor(Color.red);  
+        g.setFont(z);
+        g.drawString("Time Left: " + GameStates.gameTime, 30, 30);
+    }
 
     @Override
     protected void render(Graphics g) {
@@ -138,6 +158,8 @@ public class SpriteDemo extends SimpleFramework {
         deku.render(g2d, getViewportTransform());
         ghost.render(g2d, getViewportTransform());
         jello.render(g2d, getViewportTransform());
+        
+        renderTimer(g);
 
         // render the bounding shapes only
         // if bounds rendering is enabled
