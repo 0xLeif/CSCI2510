@@ -48,8 +48,8 @@ public class DekuSprite extends Sprite {
 	private static final Vector2f[] boundVectors = {
             new Vector2f(0.025f, -0.025f),
             new Vector2f(-0.025f, -0.025f),
-            new Vector2f(-0.025f, 0.01f),
-            new Vector2f(0.025f, 0.01f)
+            new Vector2f(-0.025f, 0.025f),
+            new Vector2f(0.025f, 0.025f)
 	};
 
 	// constructor: initialize values and create the sprite
