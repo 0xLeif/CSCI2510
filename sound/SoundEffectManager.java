@@ -12,11 +12,11 @@ public class SoundEffectManager extends SoundManager {
                 oneShotClip.fire();
                 break;
             case "jello1":
-                super.setupSound("soundclips/jello1.wav", s);
+                super.setupSound("res/soundclips/jello1.wav", s);
                 oneShotStream.fire();
                 break;
             case "jello2":
-                super.setupSound("soundclips/jello2.wav", s);
+                super.setupSound("res/soundclips/jello2.wav", s);
                 oneShotStream.fire();
                 break;
         }
