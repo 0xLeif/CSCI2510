@@ -7,6 +7,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Random;
 
 import world.*;
 
@@ -91,7 +92,7 @@ public class BGSprite extends Sprite {
             x = 0;
             y++;
         }
-        System.out.println(list.size());
+        createEnemies();
         currLevel++;
     }
 
@@ -106,6 +107,9 @@ public class BGSprite extends Sprite {
                 }
             }
         }
+        for (Sprite s : GameStates.enemies){
+            s.renderBoundingShapes(g);
+        }
     }
 
     @Override
@@ -118,10 +122,11 @@ public class BGSprite extends Sprite {
                 s.render(g2d,view);
             }
         }
-    }
-
-    public ArrayList<Vector2f> getEnemyPos() {
-        return enemyPos;
+        for (Sprite s : GameStates.enemies){
+            s.updateWorldsForBounds();
+            s.setViewsForBounds(view);
+            s.render(g2d,view);
+        }
     }
 
     public Vector2f getTorchPos() {
@@ -136,5 +141,18 @@ public class BGSprite extends Sprite {
 
     public ArrayList<WallSprite> getList() {
         return list;
+    }
+
+    public void createEnemies(){
+        Random random = new Random();
+        for (Vector2f vectors : enemyPos){
+            if(random.nextInt() % 2 == 0){
+                GameStates.enemies.add(new JelloSprite(getClass().getResource("/res/img/jello_3x4.png")));
+            }
+            else {
+                GameStates.enemies.add(new GhostSprite(getClass().getResource("/res/img/ghost_4x4.png")));
+            }
+            GameStates.enemies.get(GameStates.enemies.size() - 1).setPos(vectors);
+        }
     }
 }

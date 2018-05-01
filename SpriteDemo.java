@@ -18,7 +18,6 @@ public class SpriteDemo extends SimpleFramework {
     private HeartSprite heart;
     private BGSprite bg;
     private DekuSprite deku;
-    public static ArrayList<Sprite> enemies = new ArrayList<>();
 
     // gamestate
     private boolean renderBounds;
@@ -52,17 +51,6 @@ public class SpriteDemo extends SimpleFramework {
         bg = new BGSprite(getClass().getResource("/res/img/background_1x1.png"));
         deku = new DekuSprite(getClass().getResource("/res/img/girlsprite_4x4.png"));
 
-        Random random = new Random();
-        for (Vector2f vectors : bg.getEnemyPos()){
-            if(random.nextInt() % 2 == 0){
-                enemies.add(new JelloSprite(getClass().getResource("/res/img/jello_3x4.png")));
-            }
-            else {
-                enemies.add(new GhostSprite(getClass().getResource("/res/img/ghost_4x4.png")));
-            }
-            enemies.get(enemies.size() - 1).setPos(vectors);
-        }
-        
         // move deku up and to the right a bit
         deku.setPos(new Vector2f(0.75f, -.72f));
         heart.setPos(bg.getTorchPos());
@@ -70,7 +58,7 @@ public class SpriteDemo extends SimpleFramework {
         bg.setViewsForBounds(view);
         heart.setViewsForBounds(view);
         deku.setViewsForBounds(view);
-        for (Sprite sprite : enemies){
+        for (Sprite sprite : GameStates.enemies){
             sprite.setViewsForBounds(view);
         }
 
@@ -96,10 +84,11 @@ public class SpriteDemo extends SimpleFramework {
         if (keyboard.keyDownOnce(KeyEvent.VK_B)) {
             renderBounds = !renderBounds;
         }
+        heart.setPos(bg.getTorchPos());
         bg.setViewsForBounds(getViewportTransform());
         heart.setViewsForBounds(getViewportTransform());
         deku.setViewsForBounds(getViewportTransform());
-        for (Sprite sprite : enemies){
+        for (Sprite sprite : GameStates.enemies){
             sprite.setViewsForBounds(getViewportTransform());
         }
 
@@ -107,7 +96,7 @@ public class SpriteDemo extends SimpleFramework {
         heart.update(deku, bg);
         deku.update(keyboard, bg);
 
-        for (Sprite sprite : enemies){
+        for (Sprite sprite : GameStates.enemies){
             if (sprite instanceof GhostSprite &&
                 ((GhostSprite) sprite).isChasingPlayer())
                 musicSelect = 1;
@@ -120,7 +109,7 @@ public class SpriteDemo extends SimpleFramework {
         heart.updateWorldsForBounds();
         bg.updateWorldsForBounds();
         deku.updateWorldsForBounds();
-        for (Sprite sprite : enemies){
+        for (Sprite sprite : GameStates.enemies){
             sprite.updateWorldsForBounds();
         }
 
@@ -151,7 +140,7 @@ public class SpriteDemo extends SimpleFramework {
         bg.render(g2d, getViewportTransform());
         heart.render(g2d, getViewportTransform());
         deku.render(g2d, getViewportTransform());
-        for (Sprite sprite : enemies){
+        for (Sprite sprite : GameStates.enemies){
             sprite.render(g2d, getViewportTransform());
         }
 
@@ -162,8 +151,10 @@ public class SpriteDemo extends SimpleFramework {
             bg.renderBoundingShapes(g);
             heart.renderBoundingShapes(g);
             deku.renderBoundingShapes(g);
-            for (Sprite sprite : enemies){
-                sprite.renderBoundingShapes(g);
+            for (Sprite sprite : GameStates.enemies){
+                if (!sprite.bounds.isEmpty()) {
+                    sprite.renderBoundingShapes(g);
+                }
             }
         }
     }

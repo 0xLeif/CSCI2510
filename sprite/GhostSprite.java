@@ -178,8 +178,14 @@ public class GhostSprite extends Sprite {
         }
 
         // hold on to the old pos + the new pos
-        Vector2f oldPos = new Vector2f(pos);
-        Vector2f newPos = pos.add(deltaPos);
+        Vector2f oldPos = new Vector2f();
+        Vector2f newPos = new Vector2f();
+        if(pos == null){
+            pos = spawnPos;
+        } else {
+            oldPos = new Vector2f(pos);
+            newPos = pos.add(deltaPos);
+        }
 
         // apply the new position change to the bounding shapes
         translateBounds(deltaPos);
