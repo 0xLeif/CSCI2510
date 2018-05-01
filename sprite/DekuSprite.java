@@ -32,14 +32,6 @@ public class DekuSprite extends Sprite {
 	public int frameInterval; // frames passed before changing facingFrame
 	public int movingFramesPassed; // number of frames spent moving
 
-
-
-
-
-
-
-
-
 	// movement
 	public boolean moving; // if deku is currently moving
 	public float vel; // movement speed
@@ -47,10 +39,6 @@ public class DekuSprite extends Sprite {
 	// the bounding shape for deku is one rectangle
 	private static final Vector2f[] boundVectors = { new Vector2f(0.025f, -0.025f), new Vector2f(-0.025f, -0.025f),
 			new Vector2f(-0.025f, 0.01f), new Vector2f(0.025f, 0.01f) };
-
-
-
-
 
 	// constructor: initialize values and create the sprite
 	// as well as the bounding shape
@@ -63,11 +51,6 @@ public class DekuSprite extends Sprite {
 		facing = FACE_D; // face downward first
 		facingFrame = FRAME2; // second frame is "idle" frame
 		frameInterval = 15; // frames until changing stepping frame
-
-
-
-
-
 	}
 
 	// set the position of deku but also move his bounding shape
@@ -75,40 +58,7 @@ public class DekuSprite extends Sprite {
 		pos = newPos;
 		bounds.get(0).position = newPos;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	
 	// update various characteristics of deku
 	public void update(KeyboardInput kb, BGSprite bg) {
 
@@ -139,46 +89,9 @@ public class DekuSprite extends Sprite {
 				calculateAndSetFacingFrame(); // determine which of 4 frames in
 												// 'x' direction to use
 
-
-
-
-
-
-
-
-
-
-
 			}
 
 		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		setFacingDirection(); // set the direction facing LDUR
 		applyVelocity(bg); // apply a movement translation
 
