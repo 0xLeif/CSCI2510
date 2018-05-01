@@ -58,7 +58,7 @@ public class SoundManager {
         restartStream.initialize();
     }
 
-    private void shutDownClips() {
+    protected void shutDownClips() {
         if (oneShotClip != null)
             oneShotClip.shutDown();
         if (loopClip != null)

@@ -37,10 +37,10 @@ public class GhostSprite extends Sprite {
     };
 
     private static final Vector2f[] visionBounds = {
-            new Vector2f(0.4f / 2, -0.4f / 2),
-            new Vector2f(-0.4f / 2, -0.4f / 2),
-            new Vector2f(-0.4f / 2, 0.4f / 2),
-            new Vector2f(0.4f / 2, 0.4f / 2)
+            new Vector2f(0.45f / 2, -0.45f / 2),
+            new Vector2f(-0.45f / 2, -0.45f / 2),
+            new Vector2f(-0.45f / 2, 0.45f / 2),
+            new Vector2f(0.45f / 2, 0.45f / 2)
     };
 
     private static final Vector2f[] audioBounds = {
@@ -81,18 +81,11 @@ public class GhostSprite extends Sprite {
         }
     }
 
-    public void setSpawnPos(Vector2f newPos) {
-        pos = newPos;
+    public void setSpawnPos(Vector2f p) {
+        spawnPos = p;
+        pos = p;
         for(VectorObject b : bounds) {
-            b.position = newPos;
-        }
-        spawnPos = pos;
-    }
-
-    public void returnToSpawnPos() {
-        pos = spawnPos;
-        for(VectorObject b : bounds) {
-            b.position = spawnPos;
+            b.position = p;
         }
     }
 
@@ -101,7 +94,7 @@ public class GhostSprite extends Sprite {
         currentSpriteNum = facing;
     }
 
-    public void update(DekuSprite ds, BGSprite bg) {
+    public boolean update(DekuSprite ds, BGSprite bg) {
         if(visionBound.isCollidingWith(ds.bounds.get(0))) {
             visible = true;
             sawPlayer = true;
@@ -129,11 +122,15 @@ public class GhostSprite extends Sprite {
             soundPlayed = false;
 
         move(sawPlayer, bg, ds);
+
+        // return boolean for the game to recognize when the player is chased and play appropriate music
+        return chasingPlayer;
     }
 
     private void move(boolean afterPlayer, BGSprite bg, DekuSprite ds) {
         Vector2f deltaPos = new Vector2f();
         float vel;
+
         if(!afterPlayer) {
             Random r = new Random();
             vel = 0.03f;
@@ -160,59 +157,60 @@ public class GhostSprite extends Sprite {
         else { // if after the player
             if(!chasingPlayer) {
                 Random r = new Random();
-                chaseTimer = r.nextInt(1000) + 500;
+                chaseTimer = r.nextInt(500) + 300;
                 chasingPlayer = true;
             }
             System.out.println("chaseTimer: " + chaseTimer);
             chaseTimer--;
 
-            vel = 0.003f;
-
-            float xDist = ds.pos.x - pos.x;
-            float yDist = ds.pos.y - pos.y;
-
-            float h = (float) Math.sqrt(xDist * xDist + yDist * yDist);
-            xDist /= h;
-            yDist /= h;
-
-            pos.x += vel * xDist;
-            pos.y += vel * yDist;
-
-            if(xDist > 0)
-                setFacing(FACE_R);
-            else
-                setFacing(FACE_L);
-
             if(chaseTimer <= 0 && !visible) {
-                setPos(spawnPos);
                 chasingPlayer = false;
                 sawPlayer = false;
+                setPos(spawnPos);
+            }
+            else {
+                vel = 0.005f;
+
+                float xDist = ds.pos.x - pos.x;
+                float yDist = ds.pos.y - pos.y;
+
+                float h = (float) Math.sqrt(xDist * xDist + yDist * yDist);
+                xDist /= h;
+                yDist /= h;
+
+                pos.x += vel * xDist;
+                pos.y += vel * yDist;
+
+                if (xDist > 0)
+                    setFacing(FACE_R);
+                else
+                    setFacing(FACE_L);
             }
         }
 
-            // hold on to the old pos + the new pos
-            Vector2f oldPos = new Vector2f(pos);
-            Vector2f newPos = pos.add(deltaPos);
+        // hold on to the old pos + the new pos
+        Vector2f oldPos = new Vector2f(pos);
+        Vector2f newPos = pos.add(deltaPos);
 
-            // apply the new position change to the bounding shapes
-            translateBounds(deltaPos);
+        // apply the new position change to the bounding shapes
+        translateBounds(deltaPos);
 
-            for(VectorObject b : bounds) {
-                b.updateWorld();
-                b.repopulateTransformedVectors();
+        for(VectorObject b : bounds) {
+            b.updateWorld();
+            b.repopulateTransformedVectors();
+        }
+
+        setPos(newPos);
+
+        //check for colliding with background
+        if (isCollidingWith(bg)) {
+            // use the old position pre-collision for the sprite
+            // and bounding shapes instead of the new position
+            for (VectorObject b : bounds) {
+                b.position = oldPos;
+                setPos(oldPos);
             }
-
-            setPos(newPos);
-
-            //check for colliding with background
-            if (isCollidingWith(bg)) {
-                // use the old position pre-collision for the sprite
-                // and bounding shapes instead of the new position
-                for(VectorObject b : bounds) {
-                    b.position = oldPos;
-                    setPos(oldPos);
-                }
-            }
+        }
     }
 
     @Override
