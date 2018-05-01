@@ -7,6 +7,8 @@ public class HeartSprite extends Sprite {
 
 	public int colorFramesPassed = 0;  // number of frames spent changing colors
 	public int colorInterval = 5;     // number of frames passing before changing colors
+	public boolean wonGame = false; // Whether the end of the game has been reached
+	public int level = 0; // The current level the player is in
 	
     public HeartSprite(URL file) {
         super(file);
@@ -32,11 +34,17 @@ public class HeartSprite extends Sprite {
     }
 
     private void transitionLevel(DekuSprite deku, BGSprite bg) {
+    	if (level == 1 || wonGame) {
+    		wonGame = true;
+    		return;
+    	}
         deku.setPos(new Vector2f(0.75f, -.72f));
         deku.setCurrentSpriteNum(0);
         SpriteDemo
         bg.generateMaze();
         setPos(new Vector2f(.55f, .2f));
+        level++;
+        GameStates.gameTime = 60;
     }
 
     // set the position of the torch
