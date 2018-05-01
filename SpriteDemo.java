@@ -21,6 +21,12 @@ public class SpriteDemo extends SimpleFramework {
 
     // gamestate
     private boolean renderBounds;
+    
+    private int gameState; // Determines which gamestate the player is in currently
+    private static int startScreen = 0;
+    private static int isPlaying = 1;
+    private static int winScreen = 2;
+    private static int gameOverScreen = 3;
 
     private int musicSelect; // for selecting what music to play, 1 when the player is chased
     private int lastPlayed;
@@ -72,6 +78,8 @@ public class SpriteDemo extends SimpleFramework {
         lastPlayed = -1;
         musicManager.playMusic("level");
         setResizable(false);
+        
+        gameState = startScreen;
     }
 
     @Override
@@ -83,33 +91,57 @@ public class SpriteDemo extends SimpleFramework {
     protected void updateObjects(float delta) {
         super.updateObjects(delta);
 
-        // toggle rendering of bounding shapes
-        if (keyboard.keyDownOnce(KeyEvent.VK_B)) {
-            renderBounds = !renderBounds;
+        if (gameState == startScreen) { // Start screen
+        	if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
+        		gameState = isPlaying;
+        	}
         }
-        bg.setViewsForBounds(getViewportTransform());
-        heart.setViewsForBounds(getViewportTransform());
-        deku.setViewsForBounds(getViewportTransform());
-        ghost.setViewsForBounds(getViewportTransform());
-        jello.setViewsForBounds(getViewportTransform());
+        if (gameState == isPlaying) {
+        	if (heart.wonGame) {
+        		gameState = winScreen;
+        	}
+        	else if (ghost.isCollidingWith(deku)) { 
+        		gameState = gameOverScreen;
+        	}
+        	else { 
+        		// toggle rendering of bounding shapes
+                if (keyboard.keyDownOnce(KeyEvent.VK_B)) {
+                    renderBounds = !renderBounds;
+                }
+                bg.setViewsForBounds(getViewportTransform());
+                heart.setViewsForBounds(getViewportTransform());
+                deku.setViewsForBounds(getViewportTransform());
+                ghost.setViewsForBounds(getViewportTransform());
+                jello.setViewsForBounds(getViewportTransform());
 
-        // update game sprites
-        heart.update(deku, bg);
-        deku.update(keyboard, bg);
-        if(ghost.update(deku, bg))
-            musicSelect = 1;
-        else
-            musicSelect = 0;
-        jello.update(deku, bg);
-        
-        // apply words to vectorobject bounds
-        heart.updateWorldsForBounds();
-        bg.updateWorldsForBounds();
-        deku.updateWorldsForBounds();
-        ghost.updateWorldsForBounds();
-        jello.updateWorldsForBounds();
+                // update game sprites
+                heart.update(deku, bg);
+                deku.update(keyboard, bg);
+                if(ghost.update(deku, bg))
+                    musicSelect = 1;
+                else
+                    musicSelect = 0;
+                jello.update(deku, bg);
+                
+                // apply words to vectorobject bounds
+                heart.updateWorldsForBounds();
+                bg.updateWorldsForBounds();
+                deku.updateWorldsForBounds();
+                ghost.updateWorldsForBounds();
+                jello.updateWorldsForBounds();
 
-        playMusic();
+                playMusic();
+        	}
+        }
+        if (gameState == winScreen) {
+        	System.out.println("You win");
+        }
+        if (gameState == gameOverScreen) {
+        	System.out.println("You lose");
+        }
+        else { // Unknown state?
+        	
+        }
     }
 
     private void playMusic() {
@@ -128,26 +160,29 @@ public class SpriteDemo extends SimpleFramework {
     @Override
     protected void render(Graphics g) {
         super.render(g);
-        // create a graphics2d object for
-        // drawing BufferedImage instances
-        Graphics2D g2d = (Graphics2D) g;
+        
+        if (gameState == isPlaying) { 
+        	// create a graphics2d object for
+            // drawing BufferedImage instances
+            Graphics2D g2d = (Graphics2D) g;
 
-        // call render function for each sprite
-        bg.render(g2d, getViewportTransform());
-        heart.render(g2d, getViewportTransform());
-        deku.render(g2d, getViewportTransform());
-        ghost.render(g2d, getViewportTransform());
-        jello.render(g2d, getViewportTransform());
+            // call render function for each sprite
+            bg.render(g2d, getViewportTransform());
+            heart.render(g2d, getViewportTransform());
+            deku.render(g2d, getViewportTransform());
+            ghost.render(g2d, getViewportTransform());
+            jello.render(g2d, getViewportTransform());
 
-        // render the bounding shapes only
-        // if bounds rendering is enabled
+            // render the bounding shapes only
+            // if bounds rendering is enabled
 
-        if (renderBounds) {
-            bg.renderBoundingShapes(g);
-            heart.renderBoundingShapes(g);
-            deku.renderBoundingShapes(g);
-            ghost.renderBoundingShapes(g);
-            jello.renderBoundingShapes(g);
+            if (renderBounds) {
+                bg.renderBoundingShapes(g);
+                heart.renderBoundingShapes(g);
+                deku.renderBoundingShapes(g);
+                ghost.renderBoundingShapes(g);
+                jello.renderBoundingShapes(g);
+            }
         }
     }
 
