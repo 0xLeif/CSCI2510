@@ -9,6 +9,13 @@ import java.nio.file.Paths;
 public class WallSprite extends Sprite {
     public boolean isSolid;
 
+    private Vector2f[] boundVectors = {
+            new Vector2f(0.05f, -0.05f),
+            new Vector2f(-0.05f, -0.05f),
+            new Vector2f(-0.05f, 0.05f),
+            new Vector2f(0.05f, 0.05f)
+    };
+
     public WallSprite(Vector2f location, String type) throws MalformedURLException {
         super(Paths.get("res/img/walltile_1x1.png").toUri().toURL());
         pos = getPlayAreaLocation(location);
@@ -17,13 +24,6 @@ public class WallSprite extends Sprite {
         bound.setPosition(pos);
         addBound(bound);
     }
-
-    private Vector2f[] boundVectors = {
-            new Vector2f(0.05f, -0.05f),
-            new Vector2f(-0.05f, -0.05f),
-            new Vector2f(-0.05f, 0.05f),
-            new Vector2f(0.05f, 0.05f)
-    };
 
     private Vector2f getPlayAreaLocation(Vector2f gridLoc) {
         float x = (float) ((gridLoc.x - 7) / 7) * .75f;

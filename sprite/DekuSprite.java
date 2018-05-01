@@ -59,7 +59,7 @@ public class DekuSprite extends Sprite {
 		VectorObject primaryBound = new VectorObject(boundVectors);
 		addBound(primaryBound);
 
-		vel = 0.01f; 			// velocity only applied while moving
+		vel = 0.02f; 			// velocity only applied while moving
 		facing = FACE_D; 		// face downward first
 		facingFrame = FRAME2; 	// second frame is "idle" frame
 		frameInterval = 15; 	// frames until changing stepping frame

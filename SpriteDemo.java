@@ -47,7 +47,7 @@ public class SpriteDemo extends SimpleFramework {
         view = getViewportTransform();
 
         // load spritesheets
-        heart = new HeartSprite(getClass().getResource("/res/img/hearts_9x1.png"));
+        heart = new HeartSprite(getClass().getResource("/res/img/torch_9x1.png"));
         bg = new BGSprite(getClass().getResource("/res/img/background_1x1.png"));
         deku = new DekuSprite(getClass().getResource("/res/img/girlsprite_4x4.png"));
         ghost = new GhostSprite(getClass().getResource("/res/img/ghost_4x4.png"));
@@ -94,7 +94,7 @@ public class SpriteDemo extends SimpleFramework {
         jello.setViewsForBounds(getViewportTransform());
 
         // update game sprites
-        heart.update(deku);
+        heart.update(deku, bg);
         deku.update(keyboard, bg);
         if(ghost.update(deku, bg))
             musicSelect = 1;
