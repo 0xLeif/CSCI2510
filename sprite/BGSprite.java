@@ -151,6 +151,7 @@ public class BGSprite extends Sprite {
             }
             else {
                 GameStates.enemies.add(new GhostSprite(getClass().getResource("/res/img/ghost_4x4.png")));
+                ((GhostSprite) GameStates.enemies.get(GameStates.enemies.size() - 1)).setSpawnPos(vectors);
             }
             GameStates.enemies.get(GameStates.enemies.size() - 1).setPos(vectors);
         }

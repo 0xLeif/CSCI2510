@@ -72,7 +72,6 @@ public class GhostSprite extends Sprite {
         soundPlayed = false;
         chasingPlayer = false;
         chaseTimer = 0;
-        spawnPos = pos;
     }
 
     public void setPos(Vector2f newPos) {
@@ -82,6 +81,9 @@ public class GhostSprite extends Sprite {
         }
     }
 
+    public void setSpawnPos(Vector2f newPos) {
+        spawnPos = newPos;
+    }
     private void setFacing(int direction) {
         facing = direction;
         currentSpriteNum = facing;
@@ -147,7 +149,7 @@ public class GhostSprite extends Sprite {
         else { // if after the player
             if(!chasingPlayer) {
                 Random r = new Random();
-                chaseTimer = r.nextInt(500) + 300;
+                chaseTimer = r.nextInt(300) + 30;
                 chasingPlayer = true;
             }
             System.out.println("chaseTimer: " + chaseTimer);
