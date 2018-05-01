@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 
 import framework.*;
 import sound.MusicManager;
@@ -38,7 +39,6 @@ public class SpriteDemo extends SimpleFramework {
     public SpriteDemo() {
         appTitle = "Maze Game";
         appBorderScale = 0.99f;
-
         // app is a square
         appWidth = appHeight = 1250;
         appWorldWidth = appWorldHeight = 2.0f;
@@ -79,7 +79,20 @@ public class SpriteDemo extends SimpleFramework {
         musicManager.playMusic("level");
         setResizable(false);
         
+        createTimer();
+        
         gameState = startScreen;
+    }
+    
+    private void createTimer() {
+        GameStates.timer.schedule(new TimerTask() {
+            public void run() {
+                if(--GameStates.gameTime == 0) {
+                    System.out.println("Game Over!");
+                    System.exit(1);
+                }
+            }
+        }, 0, 1000);
     }
 
     @Override
@@ -155,6 +168,13 @@ public class SpriteDemo extends SimpleFramework {
             musicManager.playMusic("chase");
             lastPlayed = musicSelect;
         }
+    }
+    
+    private void renderTimer(Graphics g) {
+        Font z = new Font("ZapfDingbats", Font.PLAIN, 30);
+        g.setColor(Color.red);  
+        g.setFont(z);
+        g.drawString("Time Left: " + GameStates.gameTime, 30, 30);
     }
 
     @Override

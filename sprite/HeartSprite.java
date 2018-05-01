@@ -44,6 +44,7 @@ public class HeartSprite extends Sprite {
         bg.generateMaze();
         setPos(new Vector2f(.55f, .2f));
         level++;
+        GameStates.gameTime = 60;
     }
 
     // set the position of the torch
