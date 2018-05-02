@@ -44,7 +44,6 @@ public class HeartSprite extends Sprite {
         deku.setCurrentSpriteNum(0);
         GameStates.enemies.clear();
         bg.generateMaze();
-        
         GameStates.gameTime = 60;
     }
 
