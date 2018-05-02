@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.Timer;
 import java.util.TimerTask;
 
 import framework.*;
@@ -94,6 +93,7 @@ public class SpriteDemo extends SimpleFramework {
     }
 
     private void createTimer(){
+        GameStates.timer = new Timer();
         GameStates.timer.schedule(new TimerTask() {
             public void run() {
                 if(--GameStates.gameTime == 0 && screenType != startScreen){
@@ -131,7 +131,7 @@ public class SpriteDemo extends SimpleFramework {
         	if (heart.wonGame) {
         		screenType = winScreen;
         	}
-        	
+
         	// toggle rendering of bounding shapes
             if (keyboard.keyDownOnce(KeyEvent.VK_B)) {
                 renderBounds = !renderBounds;
@@ -179,6 +179,7 @@ public class SpriteDemo extends SimpleFramework {
             playMusic();
         	if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
         		GameStates.enemies.clear();
+        		GameStates.timer.cancel();
         		musicManager.stopMusic();
         		initialize();
         	}
@@ -188,6 +189,7 @@ public class SpriteDemo extends SimpleFramework {
             playMusic();
         	if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
         		GameStates.enemies.clear();
+                GameStates.timer.cancel();
         		musicManager.stopMusic();
         		initialize();
         	}
