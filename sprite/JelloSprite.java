@@ -93,7 +93,7 @@ public class JelloSprite extends Sprite {
         }
     }
 
-    public void update(DekuSprite ds, BGSprite bg) {
+    public void update(PlayerSprite ds, BGSprite bg) {
         if(visionBound.isCollidingWith(ds.bounds.get(0))) {
             visible = true;
         }

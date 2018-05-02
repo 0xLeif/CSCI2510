@@ -15,9 +15,9 @@ public class SpriteDemo extends SimpleFramework {
     private Matrix3x3f view;
     
     // game sprites
-    private HeartSprite heart;
+    private TorchSprite heart;
     private BGSprite bg;
-    private DekuSprite deku;
+    private PlayerSprite deku;
     private MenuSprite startMenu;
     private MenuSprite winMenu;
     private MenuSprite loseMenu;
@@ -58,9 +58,9 @@ public class SpriteDemo extends SimpleFramework {
         view = getViewportTransform();
 
         // load spritesheets
-        heart = new HeartSprite(getClass().getResource("/res/img/torch_9x1.png"));
+        heart = new TorchSprite(getClass().getResource("/res/img/torch_9x1.png"));
         bg = new BGSprite(getClass().getResource("/res/img/background_1x1.png"));
-        deku = new DekuSprite(getClass().getResource("/res/img/girlsprite_4x4.png"));
+        deku = new PlayerSprite(getClass().getResource("/res/img/girlsprite_4x4.png"));
         startMenu = new MenuSprite(getClass().getResource("/res/img/startscreen_1x1.png"));
         loseMenu = new MenuSprite(getClass().getResource("/res/img/deathscreen_1x1.png"));
         winMenu = new MenuSprite(getClass().getResource("/res/img/victoryscreen_1x1.png"));
@@ -261,13 +261,13 @@ public class SpriteDemo extends SimpleFramework {
             }
             if(bg.isNewLevel()){
                 bg.renderBoundingShapes(g);
-                heart.renderBoundingShapes(g);
                 deku.renderBoundingShapes(g);
                 for (Sprite sprite : GameStates.enemies){
                     if (!sprite.bounds.isEmpty()) {
                         sprite.renderBoundingShapes(g);
                     }
                 }
+                heart.renderBoundingShapes(g);
             }
         }
         if (screenType == winScreen) {
