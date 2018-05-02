@@ -18,6 +18,9 @@ public class SpriteDemo extends SimpleFramework {
     private HeartSprite heart;
     private BGSprite bg;
     private DekuSprite deku;
+    private MenuSprite startMenu;
+    private MenuSprite winMenu;
+    private MenuSprite loseMenu;
 
     // gamestate
     private boolean renderBounds;
@@ -56,6 +59,9 @@ public class SpriteDemo extends SimpleFramework {
         heart = new HeartSprite(getClass().getResource("/res/img/torch_9x1.png"));
         bg = new BGSprite(getClass().getResource("/res/img/background_1x1.png"));
         deku = new DekuSprite(getClass().getResource("/res/img/girlsprite_4x4.png"));
+        startMenu = new MenuSprite(getClass().getResource("/res/img/startscreen_1x1.png"));
+        loseMenu = new MenuSprite(getClass().getResource("/res/img/deathscreen_1x1.png"));
+        winMenu = new MenuSprite(getClass().getResource("/res/img/victoryscreen_1x1.png"));
 
         // move deku up and to the right a bit
         deku.setPos(new Vector2f(0.75f, -.72f));
@@ -173,14 +179,15 @@ public class SpriteDemo extends SimpleFramework {
     @Override
     protected void render(Graphics g) {
         super.render(g);
+        
+        // create a graphics2d object for
+        // drawing BufferedImage instances
+        Graphics2D g2d = (Graphics2D) g;
+        
         if (screenType == startScreen) {
-        	
+        	startMenu.render(g2d, getViewportTransform());
         }
         if (screenType == gameScreen) {
-        	// create a graphics2d object for
-            // drawing BufferedImage instances
-            Graphics2D g2d = (Graphics2D) g;
-
             // call render function for each sprite
             bg.render(g2d, getViewportTransform());
             heart.render(g2d, getViewportTransform());
@@ -204,10 +211,10 @@ public class SpriteDemo extends SimpleFramework {
             }
         }
         if (screenType == winScreen) {
-        	
+        	winMenu.render(g2d, getViewportTransform());
         }
         if (screenType == loseScreen) {
-        	
+        	loseMenu.render(g2d, getViewportTransform());
         }
         
     }
