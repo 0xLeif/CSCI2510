@@ -96,8 +96,9 @@ public class SpriteDemo extends SimpleFramework {
     private void createTimer(){
         GameStates.timer.schedule(new TimerTask() {
             public void run() {
-                if(--GameStates.gameTime == 0){
+                if(--GameStates.gameTime == 0 && screenType != startScreen){
                     screenType = loseScreen;
+                    GameStates.gameTime = 60;
                 }
             }
         }, 0, 1000);
@@ -123,6 +124,7 @@ public class SpriteDemo extends SimpleFramework {
         if (screenType == startScreen) { 
         	if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
         		screenType = gameScreen;
+                GameStates.gameTime = 60;
         	}
         }
         if (screenType == gameScreen) {
