@@ -25,7 +25,7 @@ public class SpriteDemo extends SimpleFramework {
     // gamestate
     private boolean renderBounds;
 
-    private int musicSelect; // for selecting what music to play, 1 when the player is chased
+    private int musicSelect; // for selecting what music to play, 1 when the player is chased, 2 for title, 3 for game over, 4 for victory
     private int lastPlayed;
     
     private int screenType;
@@ -33,6 +33,8 @@ public class SpriteDemo extends SimpleFramework {
     private static final int gameScreen = 1;
     private static final int winScreen = 2;
     private static final int loseScreen = 3;
+
+    private boolean playerChased;
 
     // sound
     private SoundEffectManager soundEffectManager;
@@ -74,13 +76,15 @@ public class SpriteDemo extends SimpleFramework {
             sprite.setViewsForBounds(view);
         }
 
-        // play dubstep (for testing purposes)
+        // music and sound
         soundEffectManager = new SoundEffectManager();
         musicManager = new MusicManager();
-        musicSelect = 0;
+        musicSelect = 2;
         lastPlayed = -1;
-        musicManager.playMusic("level");
+        musicManager.playMusic("start");
         setResizable(false);
+
+        playerChased = false;
         
         // Set up game state
         screenType = startScreen;
@@ -94,6 +98,7 @@ public class SpriteDemo extends SimpleFramework {
     @Override
     protected void updateObjects(float delta) {
         super.updateObjects(delta);
+        playerChased = false;
 
         if (screenType == startScreen) { 
         	if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
@@ -124,10 +129,8 @@ public class SpriteDemo extends SimpleFramework {
             for (Sprite sprite : GameStates.enemies){
                 if (sprite instanceof GhostSprite &&
                     ((GhostSprite) sprite).isChasingPlayer()) {
-                    musicSelect = 1;
+                    playerChased = true;
                 }
-                else
-                    musicSelect = 0;
                 if (sprite instanceof GhostSprite || sprite instanceof JelloSprite) {
                 	if (sprite.isCollidingWith(deku)) {
                     	screenType = loseScreen;
@@ -140,23 +143,32 @@ public class SpriteDemo extends SimpleFramework {
             heart.updateWorldsForBounds();
             bg.updateWorldsForBounds();
             deku.updateWorldsForBounds();
-            for (Sprite sprite : GameStates.enemies){
+            for (Sprite sprite : GameStates.enemies) {
                 sprite.updateWorldsForBounds();
             }
-
+            if(playerChased)
+                musicSelect = 1;
+            else
+                musicSelect = 0;
             playMusic();
         }
         if (screenType == winScreen) {
         	System.out.println("You win!");
+        	musicSelect = 4;
+            playMusic();
         	if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
         		GameStates.enemies.clear();
+        		musicManager.stopMusic();
         		initialize();
         	}
         }
         if (screenType == loseScreen) {
+            musicSelect = 3;
+            playMusic();
         	System.out.println("You lose!");
         	if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
         		GameStates.enemies.clear();
+        		musicManager.stopMusic();
         		initialize();
         	}
         }
@@ -172,6 +184,21 @@ public class SpriteDemo extends SimpleFramework {
         if(musicSelect == 1 && lastPlayed != musicSelect) {
             musicManager.stopMusic();
             musicManager.playMusic("chase");
+            lastPlayed = musicSelect;
+        }
+        if(musicSelect == 2 && lastPlayed != musicSelect) {
+            musicManager.stopMusic();
+            musicManager.playMusic("start");
+            lastPlayed = musicSelect;
+        }
+        if(musicSelect == 3 && lastPlayed != musicSelect) {
+            musicManager.stopMusic();
+            musicManager.playMusic("gameover");
+            lastPlayed = musicSelect;
+        }
+        if(musicSelect == 4 && lastPlayed != musicSelect) {
+            musicManager.stopMusic();
+            musicManager.playMusic("victory");
             lastPlayed = musicSelect;
         }
     }
