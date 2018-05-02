@@ -15,6 +15,18 @@ public class MusicManager extends SoundManager {
                 super.setupSound("res/music/level.wav", s);
                 loopClip.fire();
                 break;
+            case "gameover":
+                super.setupSound("res/music/gameover.wav", s);
+                loopClip.fire();
+                break;
+            case "start":
+                super.setupSound("res/music/start.wav", s);
+                loopClip.fire();
+                break;
+            case "victory":
+                super.setupSound("res/music/victory.wav", s);
+                loopClip.fire();
+                break;
         }
     }
 
