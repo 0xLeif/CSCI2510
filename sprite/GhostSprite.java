@@ -152,7 +152,6 @@ public class GhostSprite extends Sprite {
                 chaseTimer = r.nextInt(300) + 30;
                 chasingPlayer = true;
             }
-            System.out.println("chaseTimer: " + chaseTimer);
             chaseTimer--;
 
             if(chaseTimer <= 0) {

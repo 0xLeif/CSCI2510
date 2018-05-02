@@ -26,6 +26,7 @@ public class BGSprite extends Sprite {
     private int currLevel = 0;
     private Vector2f torchPos = new Vector2f();
     private ArrayList<Vector2f> enemyPos = new ArrayList<>();
+    private boolean isNewLevel = false;
 
     private ArrayList<WallSprite> list = new ArrayList<>();
     // constructor: create a bounding shape and apply transformations,
@@ -93,6 +94,7 @@ public class BGSprite extends Sprite {
             y++;
         }
         createEnemies();
+        isNewLevel = true;
         currLevel++;
     }
 
@@ -110,6 +112,7 @@ public class BGSprite extends Sprite {
         for (Sprite s : GameStates.enemies){
             s.renderBoundingShapes(g);
         }
+        isNewLevel = false;
     }
 
     @Override
@@ -155,5 +158,9 @@ public class BGSprite extends Sprite {
             }
             GameStates.enemies.get(GameStates.enemies.size() - 1).setPos(vectors);
         }
+    }
+
+    public boolean isNewLevel() {
+        return isNewLevel;
     }
 }

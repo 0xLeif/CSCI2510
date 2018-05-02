@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.TimerTask;
 
 import framework.*;
 import sound.MusicManager;
@@ -54,7 +55,7 @@ public class SpriteDemo extends SimpleFramework {
         super.initialize();
 
         // essential initializations
-        renderBounds = true;
+        renderBounds = false;
         view = getViewportTransform();
 
         // load spritesheets
@@ -88,6 +89,25 @@ public class SpriteDemo extends SimpleFramework {
         
         // Set up game state
         screenType = startScreen;
+
+        createTimer();
+    }
+
+    private void createTimer(){
+        GameStates.timer.schedule(new TimerTask() {
+            public void run() {
+                if(--GameStates.gameTime == 0){
+                    screenType = loseScreen;
+                }
+            }
+        }, 0, 1000);
+    }
+
+    private void renderTimer(Graphics g){
+        Font z = new Font("ZapfDingbats", Font.PLAIN, 30);
+        g.setColor(Color.red);
+        g.setFont(z);
+        g.drawString("Time Left: " + GameStates.gameTime, 80, 80);
     }
 
     @Override
@@ -153,7 +173,6 @@ public class SpriteDemo extends SimpleFramework {
             playMusic();
         }
         if (screenType == winScreen) {
-        	System.out.println("You win!");
         	musicSelect = 4;
             playMusic();
         	if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
@@ -165,7 +184,6 @@ public class SpriteDemo extends SimpleFramework {
         if (screenType == loseScreen) {
             musicSelect = 3;
             playMusic();
-        	System.out.println("You lose!");
         	if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
         		GameStates.enemies.clear();
         		musicManager.stopMusic();
@@ -222,11 +240,22 @@ public class SpriteDemo extends SimpleFramework {
             for (Sprite sprite : GameStates.enemies){
                 sprite.render(g2d, getViewportTransform());
             }
+            renderTimer(g);
 
             // render the bounding shapes only
             // if bounds rendering is enabled
 
             if (renderBounds) {
+                bg.renderBoundingShapes(g);
+                heart.renderBoundingShapes(g);
+                deku.renderBoundingShapes(g);
+                for (Sprite sprite : GameStates.enemies){
+                    if (!sprite.bounds.isEmpty()) {
+                        sprite.renderBoundingShapes(g);
+                    }
+                }
+            }
+            if(bg.isNewLevel()){
                 bg.renderBoundingShapes(g);
                 heart.renderBoundingShapes(g);
                 deku.renderBoundingShapes(g);
