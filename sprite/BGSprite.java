@@ -7,6 +7,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Random;
 
 import world.*;
 
@@ -23,6 +24,8 @@ public class BGSprite extends Sprite {
 
     private String[] levels = {"res/levels/maze_level_one.txt", "res/levels/maze_level_two.txt", "res/levels/end_level.txt"};
     private int currLevel = 0;
+    private Vector2f torchPos = new Vector2f();
+    private ArrayList<Vector2f> enemyPos = new ArrayList<>();
 
     private ArrayList<WallSprite> list = new ArrayList<>();
     // constructor: create a bounding shape and apply transformations,
@@ -56,6 +59,7 @@ public class BGSprite extends Sprite {
     public void generateMaze(){
         ArrayList<String[]> xyz = new ArrayList<>();
         list.clear();
+        enemyPos.clear();
         try {
             String str = new String(Files.readAllBytes(Paths.get(levels[currLevel])));
             for(String line : str.split("\n")) {
@@ -69,7 +73,18 @@ public class BGSprite extends Sprite {
         for(String[] line : xyz) {
             for(String ele : line) {
                 try {
-                    list.add(new WallSprite(new Vector2f(x++,y), ele));
+                    switch (ele) {
+                        case "2":
+                            enemyPos.add(getPlayAreaLocation(new Vector2f(x,y)));
+                            list.add(new WallSprite(new Vector2f(x++,y), ele));
+                            break;
+                        case "3":
+                            torchPos = getPlayAreaLocation(new Vector2f(x,y));
+                            list.add(new WallSprite(new Vector2f(x++,y), ele));
+                        default:
+                            list.add(new WallSprite(new Vector2f(x++,y), ele));
+                            break;
+                    }
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
@@ -77,6 +92,7 @@ public class BGSprite extends Sprite {
             x = 0;
             y++;
         }
+        createEnemies();
         currLevel++;
     }
 
@@ -91,6 +107,9 @@ public class BGSprite extends Sprite {
                 }
             }
         }
+        for (Sprite s : GameStates.enemies){
+            s.renderBoundingShapes(g);
+        }
     }
 
     @Override
@@ -103,9 +122,38 @@ public class BGSprite extends Sprite {
                 s.render(g2d,view);
             }
         }
+        for (Sprite s : GameStates.enemies){
+            s.updateWorldsForBounds();
+            s.setViewsForBounds(view);
+            s.render(g2d,view);
+        }
+    }
+
+    public Vector2f getTorchPos() {
+        return torchPos;
+    }
+
+    private Vector2f getPlayAreaLocation(Vector2f gridLoc) {
+        float x = (float) ((gridLoc.x - 7) / 7) * .75f;
+        float y = (float) ((gridLoc.y - 7) / 7) * .75f;
+        return new Vector2f(x, y);
     }
 
     public ArrayList<WallSprite> getList() {
         return list;
+    }
+
+    public void createEnemies(){
+        Random random = new Random();
+        for (Vector2f vectors : enemyPos){
+            if(random.nextInt() % 2 == 0){
+                GameStates.enemies.add(new JelloSprite(getClass().getResource("/res/img/jello_3x4.png")));
+            }
+            else {
+                GameStates.enemies.add(new GhostSprite(getClass().getResource("/res/img/ghost_4x4.png")));
+                ((GhostSprite) GameStates.enemies.get(GameStates.enemies.size() - 1)).setSpawnPos(vectors);
+            }
+            GameStates.enemies.get(GameStates.enemies.size() - 1).setPos(vectors);
+        }
     }
 }

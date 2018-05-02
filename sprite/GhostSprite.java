@@ -81,20 +81,15 @@ public class GhostSprite extends Sprite {
         }
     }
 
-    public void setSpawnPos(Vector2f p) {
-        spawnPos = p;
-        pos = p;
-        for(VectorObject b : bounds) {
-            b.position = p;
-        }
+    public void setSpawnPos(Vector2f newPos) {
+        spawnPos = newPos;
     }
-
     private void setFacing(int direction) {
         facing = direction;
         currentSpriteNum = facing;
     }
 
-    public boolean update(DekuSprite ds, BGSprite bg) {
+    public void update(DekuSprite ds, BGSprite bg) {
         if(visionBound.isCollidingWith(ds.bounds.get(0))) {
             visible = true;
             sawPlayer = true;
@@ -122,9 +117,6 @@ public class GhostSprite extends Sprite {
             soundPlayed = false;
 
         move(sawPlayer, bg, ds);
-
-        // return boolean for the game to recognize when the player is chased and play appropriate music
-        return chasingPlayer;
     }
 
     private void move(boolean afterPlayer, BGSprite bg, DekuSprite ds) {
@@ -157,13 +149,13 @@ public class GhostSprite extends Sprite {
         else { // if after the player
             if(!chasingPlayer) {
                 Random r = new Random();
-                chaseTimer = r.nextInt(500) + 300;
+                chaseTimer = r.nextInt(300) + 30;
                 chasingPlayer = true;
             }
             System.out.println("chaseTimer: " + chaseTimer);
             chaseTimer--;
 
-            if(chaseTimer <= 0 && !visible) {
+            if(chaseTimer <= 0) {
                 chasingPlayer = false;
                 sawPlayer = false;
                 setPos(spawnPos);
@@ -189,8 +181,14 @@ public class GhostSprite extends Sprite {
         }
 
         // hold on to the old pos + the new pos
-        Vector2f oldPos = new Vector2f(pos);
-        Vector2f newPos = pos.add(deltaPos);
+        Vector2f oldPos = new Vector2f();
+        Vector2f newPos = new Vector2f();
+        if(pos == null){
+            pos = spawnPos;
+        } else {
+            oldPos = new Vector2f(pos);
+            newPos = pos.add(deltaPos);
+        }
 
         // apply the new position change to the bounding shapes
         translateBounds(deltaPos);
@@ -243,5 +241,9 @@ public class GhostSprite extends Sprite {
         AffineTransform transformImg = getTransform(img, view);
         if(visible)
             g2d.drawImage(img, transformImg, null);
+    }
+
+    public boolean isChasingPlayer() {
+        return chasingPlayer;
     }
 }

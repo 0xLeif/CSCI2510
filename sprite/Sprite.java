@@ -196,4 +196,14 @@ public class Sprite {
             b.updateWorld();
         }
     }
+
+    public void setPos(Vector2f newPos) {
+        pos = newPos;
+        for(VectorObject b : bounds) {
+            b.position = newPos;
+        }
+    }
+
+    public void update(DekuSprite deku, BGSprite bg) {
+    }
 }
