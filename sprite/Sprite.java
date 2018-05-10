@@ -9,7 +9,6 @@ import java.awt.geom.AffineTransform;
 
 import java.io.IOException;
 
-import util.Utility;
 import world.*;
 
 public class Sprite {
@@ -204,6 +203,6 @@ public class Sprite {
         }
     }
 
-    public void update(DekuSprite deku, BGSprite bg) {
+    public void update(PlayerSprite deku, BGSprite bg) {
     }
 }

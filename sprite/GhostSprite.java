@@ -10,7 +10,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.Random;
-import java.util.Vector;
 
 public class GhostSprite extends Sprite {
     public static final int FACE_D = 0;
@@ -89,7 +88,7 @@ public class GhostSprite extends Sprite {
         currentSpriteNum = facing;
     }
 
-    public void update(DekuSprite ds, BGSprite bg) {
+    public void update(PlayerSprite ds, BGSprite bg) {
         if(visionBound.isCollidingWith(ds.bounds.get(0))) {
             visible = true;
             sawPlayer = true;
@@ -119,7 +118,7 @@ public class GhostSprite extends Sprite {
         move(sawPlayer, bg, ds);
     }
 
-    private void move(boolean afterPlayer, BGSprite bg, DekuSprite ds) {
+    private void move(boolean afterPlayer, BGSprite bg, PlayerSprite ds) {
         Vector2f deltaPos = new Vector2f();
         float vel;
 
